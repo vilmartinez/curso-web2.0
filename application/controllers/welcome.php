@@ -20,14 +20,22 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
 		$this->load->view('welcome_message');
+		/* le paso el nombre de la vista*/
 		#echo "Hola mundo";;
 	}
 
 	public function provincias()
 	{
 		$this->load->model('provincia_model');
+		/*carga el modelo provincia*/
 		$data = array();
+		/*defino un contenedor vacio*/
 		$data['provincias'] = $this->provincia_model->listado();
+		/*para poder llamar al modelo le doy this*/
+		/*mando el mensaje listado*/
+		$data['titulo'] = "Listado de provincias";
+		/*cargo un primer campo del arrglo*/
+		/*por cada contenedor crea una variable*/
 		print_r($data);
 		$this->load->view('provincias', $data);
 	}
