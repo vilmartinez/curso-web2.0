@@ -36,7 +36,7 @@ class Welcome extends CI_Controller {
 		$data['titulo'] = "Listado de provincias";
 		/*cargo un primer campo del arrglo*/
 		/*por cada contenedor crea una variable*/
-		/*print_r($data);*/
+		print_r($data);
 		$this->load->view('provincias', $data);
 	}
 }
