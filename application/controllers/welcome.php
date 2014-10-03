@@ -30,7 +30,7 @@ class Welcome extends CI_Controller {
 		/*carga el modelo provincia*/
 		$data = array();
 		/*defino un contenedor vacio*/
-		$data['provincias'] = $this->provincia_model->listado();
+		$data['provincias'] = $this->provincia_model->getList();
 		/*para poder llamar al modelo le doy this*/
 		/*mando el mensaje listado*/
 		$data['titulo'] = "Listado de provincias";
@@ -39,6 +39,36 @@ class Welcome extends CI_Controller {
 		/*print_r($data);*/
 		$this->load->view('provincias', $data);
 	}
+
+	public function provincia($id=null) {
+		//mandamos un id, cargamos un modelo y ver si el id
+		//es > 0 para ver si es numero o letra
+		$this->load->model('provincia_model');
+		if( $id ){
+			$p = $this->provincia_model->get($id);
+			//guardamos la consulta en la var p
+			//get id este id lo recibe la fn provincia-model
+			// en provincias y luego se imprime lo que trae
+			print_r($p);
+		}
+		else
+			echo "Debe especificar un numero entero";
+	}
+	public function provincia_nombre($nombre=null) {
+		//mandamos un id, cargamos un modelo y ver si el id
+		//es > 0 para ver si es numero o letra
+		$this->load->model('provincia_model');
+		if( $nombre ){
+			$p = $this->provincia_model->get( urldecode($nombre), 'nombre');
+			//guardamos la consulta en la var p
+			//get id este id lo recibe la fn provincia-model
+			// en provincias y luego se imprime lo que trae
+			print_r($p);
+		}
+		else
+			echo "Debe especificar un nombre de provincia";
+	}
+
 }
 
 /* End of file welcome.php */
