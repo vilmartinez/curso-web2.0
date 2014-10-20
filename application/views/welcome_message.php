@@ -67,7 +67,7 @@
 <body>
 
 <div id="container">
-	<h1>Hola mundo</h1>
+	<h1>Hola Mundo</h1>
 
 	<div id="body">
 		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>

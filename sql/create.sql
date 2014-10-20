@@ -1,143 +1,94 @@
-CREATE DATABASE  IF NOT EXISTS `cursoweb2.0` /*!40100 DEFAULT CHARACTER SET ucs2 */;
-USE `cursoweb2.0`;
--- MySQL dump 10.13  Distrib 5.6.17, for Win32 (x86)
---
--- Host: 127.0.0.1    Database: cursoweb2.0
--- ------------------------------------------------------
--- Server version	5.6.20
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Versión del servidor:         5.5.38-0ubuntu0.14.04.1 - (Ubuntu)
+-- SO del servidor:              debian-linux-gnu
+-- HeidiSQL Versión:             8.3.0.4796
+-- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
---
--- Table structure for table `departamento`
---
+-- Volcando estructura de base de datos para cursoweb2
+DROP DATABASE IF EXISTS `cursoweb2`;
+CREATE DATABASE IF NOT EXISTS `cursoweb2` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `cursoweb2`;
 
+
+-- Volcando estructura para tabla cursoweb2.departamento
 DROP TABLE IF EXISTS `departamento`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `departamento` (
+CREATE TABLE IF NOT EXISTS `departamento` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(150) DEFAULT NULL,
   `provincia_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_departamento_provincia1_idx` (`provincia_id`),
-  CONSTRAINT `fk_departamento_provincia1` FOREIGN KEY (`provincia_id`) REFERENCES `provincia` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=ucs2;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  KEY `fk_departamento_provincia1_idx` (`provincia_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `departamento`
---
-
-LOCK TABLES `departamento` WRITE;
+-- Volcando datos para la tabla cursoweb2.departamento: 0 rows
 /*!40000 ALTER TABLE `departamento` DISABLE KEYS */;
 /*!40000 ALTER TABLE `departamento` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `direccion`
---
 
+-- Volcando estructura para tabla cursoweb2.direccion
 DROP TABLE IF EXISTS `direccion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `direccion` (
+CREATE TABLE IF NOT EXISTS `direccion` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `calle` varchar(45) DEFAULT NULL,
   `numero` int(11) DEFAULT NULL,
   `piso` int(11) DEFAULT NULL,
   `depto` varchar(5) DEFAULT NULL,
   `localidad` varchar(45) DEFAULT NULL,
-  `persona_id` int(11) NOT NULL,
+  `persona_id` int(10) unsigned NOT NULL,
   `departamento_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_direccion_persona_idx` (`persona_id`),
-  KEY `fk_direccion_departamento1_idx` (`departamento_id`),
-  CONSTRAINT `fk_direccion_departamento1` FOREIGN KEY (`departamento_id`) REFERENCES `departamento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_direccion_persona` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=ucs2;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  KEY `fk_direccion_departamento1_idx` (`departamento_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `direccion`
---
-
-LOCK TABLES `direccion` WRITE;
+-- Volcando datos para la tabla cursoweb2.direccion: 0 rows
 /*!40000 ALTER TABLE `direccion` DISABLE KEYS */;
 /*!40000 ALTER TABLE `direccion` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `persona`
---
 
+-- Volcando estructura para tabla cursoweb2.persona
 DROP TABLE IF EXISTS `persona`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `persona` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `apellido` varchar(50) DEFAULT NULL,
-  `nombre` varchar(50) DEFAULT NULL,
-  `dni` int(11) DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `persona` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `apellido` varchar(150) NOT NULL,
+  `nombre` varchar(150) NOT NULL,
+  `dni` int(11) NOT NULL,
   `fecha_nacimiento` date DEFAULT NULL,
   `creado` datetime DEFAULT NULL,
   `biografia` text,
   `vive` tinyint(1) DEFAULT NULL,
-  `personacol` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=ucs2;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `dni_UNIQUE` (`dni`),
+  KEY `apenom` (`apellido`,`nombre`),
+  KEY `fecha` (`fecha_nacimiento`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `persona`
---
-
-LOCK TABLES `persona` WRITE;
+-- Volcando datos para la tabla cursoweb2.persona: 0 rows
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `provincia`
---
 
+-- Volcando estructura para tabla cursoweb2.provincia
 DROP TABLE IF EXISTS `provincia`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `provincia` (
+CREATE TABLE IF NOT EXISTS `provincia` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=ucs2;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `provincia`
---
-
-LOCK TABLES `provincia` WRITE;
+-- Volcando datos para la tabla cursoweb2.provincia: 3 rows
 /*!40000 ALTER TABLE `provincia` DISABLE KEYS */;
-INSERT INTO `provincia` VALUES (1,'Mendoza'),(2,'San Juan');
+REPLACE INTO `provincia` (`id`, `nombre`) VALUES
+	(1, 'Mendoza'),
+	(2, 'San Juan'),
+	(3, 'San Luis');
 /*!40000 ALTER TABLE `provincia` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2014-09-15  9:51:05

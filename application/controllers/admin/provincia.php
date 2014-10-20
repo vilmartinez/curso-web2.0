@@ -1,45 +1,58 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
-class Welcome extends CI_Controller {
-
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -  
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in 
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
-	 */
-	public function index()
-	{
-		$this->load->view('welcome_message');
-		/* le paso el nombre de la vista*/
-		#echo "Hola mundo";;
+<?php if (!defined('BASEPATH')) {exit('No direct script access allowed');
+}
+//una variable aqui solo tiene vida aquie en esta clase
+class Provincia extends MY_Controller {
+	//modifica el contenido de modelo por provincia model
+	public $modelo = "provincia_model";
+	// luego llama al constructor
+	public function index() {
+		$data               = array();
+		$data['provincias'] = $this->provincia_model->getList();
+		$data['titulo']     = "Listado de provincias";
+		$this->load->view('admin/provincia/index', $data);
 	}
 
-	public function provincias()
-	{
-		$this->load->model('provincia_model');
-		/*carga el modelo provincia*/
-		$data = array();
-		/*defino un contenedor vacio*/
-		$data['provincias'] = $this->provincia_model->listado();
-		/*para poder llamar al modelo le doy this*/
-		/*mando el mensaje listado*/
-		$data['titulo'] = "Listado de provincias";
-		/*cargo un primer campo del arrglo*/
-		/*por cada contenedor crea una variable*/
-		print_r($data);
-		$this->load->view('provincias', $data);
+	public function agregar() {
+		$provincia 	= $this->input->post('provincia');
+		$data 		= ['accion' => 'Agregar'];
+		//data la clave = el valor
+		//capturamos la variable que recibimos por el post de 
+		// views admin provincia agregar
+		if ($provincia){
+			// si tiene un valor lo muestro y corto sino posee 
+			//valor muestra la vista.
+			$data['nombre'] = $provincia;
+			//$data = array('provincia' => $provincia);
+			//se puede usar de las 2 formas anteriores pero la ultima
+			//versiòn de php viene como está la primer linea que es
+			//la que esta fuera de comentario.
+			$this->provincia_model->agregar($data);
+			redirect('/admin/provincia/index');
+		}else{
+			$this->load->view('admin/provincia/formulario', $data);	
+		}
+	}
+	public function editar($id = null) {
+		$provincia 	= $this->input->post('provincia');
+		$data 		= ['accion' => 'Editar'];
+		if($id){
+			$data['reg'] = $this->provincia_model->get($id);
+			//busca en la bd y trae el registro
+		}
+		if(empty($data['reg'])){
+			// si el reg no existe lo manda de vuelta al index
+			redirect('/admin/provincia/index');
+		} 
+
+		if ($provincia and $id){
+			$data['nombre'] = $provincia;
+			//se guardan los datos que editamos
+			$this->provincia_model->guardar($data, $id);
+			redirect('/admin/provincia/index');
+		}else{
+			// cuando le paso un id me debe dar los datos que tengo
+			$this->load->view('admin/provincia/formulario', $data);	
+		}
+		
 	}
 }
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
