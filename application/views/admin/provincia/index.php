@@ -16,13 +16,47 @@ foreach ($provincias as $provincia) {
 	?><tr>
 			<td><?php echo $provincia['id']?></td>
 			<td><?php echo $provincia['nombre']?></td>
-			<td><a href="<?php echo base_url().
-						'admin/provincia/editar/'.
-						$provincia['id'] ?>"
-						class="btn btn-primary">Editar</a></td>
+			<td><a href="<?php 
+		echo base_url().
+		'admin/provincia/editar/'.
+		$provincia['id'] ?>"
+			class="btn btn-primary">Editar</a>
+			<button
+				value="<?php echo $provincia['id']?>"
+				class="eliminar btn btn-danger"
+
+				>Eliminar</button></td>
 			</tr><?php
 }
 ?>
 </table>
+<script>
+$(document).ready(function(){
+	//busque los elementos que tenga la clase eliminar
+	//$(".eliminar").click(function(){
+	//	alert('Está seguro');
+	//});
+	function eliminar(){
+		var elimina = confirm('Está seguro de eliminar: '+$(this).val());
+		//se utiliza el signo + para concatenar
+		//this.val se le dice que capture ese valor
+		// Se eliminó del button la siguiente línea
+		//		class="eliminar btn btn-danger"
+		//		onclick="alert('¿Desea eliminarlo?')"
+		//confirm es un mensaje y jscript espera a que oprimamos cancelar
+		//o aceptar.
+		if(elimina){
+			//alert('registro eliminado');
+			$.post( "ajax/test.html", function( data ) {
+				$( ".result").html( data );
+			)};
+			//http://librojquery.com/
+			//http://api.jquery.com/jquery.pos/
+		}
+	}
+	$(".eliminar").click(eliminar);
+});	
+
+</script>
 <?php
 $this->load->view('layout/footer');

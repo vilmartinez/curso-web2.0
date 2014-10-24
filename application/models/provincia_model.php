@@ -24,5 +24,13 @@ class provincia_model extends CI_Model {
 	public function agregar($data = array()) {
 		//inserta en la tabla lo que se agrego
 		$this->db->insert($this->tabla, $data);
+	}  //inserta en la tabla lo que se agrego
+	public function actualizar($id, $data = array()) {
+		$this->db->where('id',$id);
+		$this->db->update($this->tabla, $data);
+	}
+	public function borrar($id) {
+		$this->db->where('id',$id);
+		$this->db->delete($this->tabla);
 	}
 }

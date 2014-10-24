@@ -15,18 +15,9 @@ class Provincia extends MY_Controller {
 	public function agregar() {
 		$provincia 	= $this->input->post('provincia');
 		$data 		= ['accion' => 'Agregar'];
-		//data la clave = el valor
-		//capturamos la variable que recibimos por el post de 
-		// views admin provincia agregar
 		if ($provincia){
-			// si tiene un valor lo muestro y corto sino posee 
-			//valor muestra la vista.
-			$data['nombre'] = $provincia;
-			//$data = array('provincia' => $provincia);
-			//se puede usar de las 2 formas anteriores pero la ultima
-			//versiòn de php viene como está la primer linea que es
-			//la que esta fuera de comentario.
-			$this->provincia_model->agregar($data);
+			$reg = ['nombre'=>$provincia];
+			$this->provincia_model->agregar($reg);
 			redirect('/admin/provincia/index');
 		}else{
 			$this->load->view('admin/provincia/formulario', $data);	
@@ -34,20 +25,17 @@ class Provincia extends MY_Controller {
 	}
 	public function editar($id = null) {
 		$provincia 	= $this->input->post('provincia');
-		$data 		= ['accion' => 'Editar'];
+		$data 		= ['accion' => 'Editar', 'id' => $id];
 		if($id){
 			$data['reg'] = $this->provincia_model->get($id);
-			//busca en la bd y trae el registro
 		}
 		if(empty($data['reg'])){
-			// si el reg no existe lo manda de vuelta al index
 			redirect('/admin/provincia/index');
 		} 
-
 		if ($provincia and $id){
-			$data['nombre'] = $provincia;
+			$reg = ['nombre' => $provincia];
 			//se guardan los datos que editamos
-			$this->provincia_model->guardar($data, $id);
+			$this->provincia_model->actualizar($id, $reg);
 			redirect('/admin/provincia/index');
 		}else{
 			// cuando le paso un id me debe dar los datos que tengo
