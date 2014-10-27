@@ -43,4 +43,16 @@ class Provincia extends MY_Controller {
 		}
 		
 	}
+	public function eliminar($id = null) {
+		if($id){
+			$data['reg'] = $this->provincia_model->get($id);
+		}
+		if(empty($data['reg'])){
+			echo 0;
+		} else{
+			$this->provincia_model->eliminar($id);
+			echo 1;
+		}
+		//pone 1 o 0 para eliminar o no
+	}
 }

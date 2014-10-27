@@ -47,11 +47,20 @@ $(document).ready(function(){
 		//o aceptar.
 		if(elimina){
 			//alert('registro eliminado');
-			$.post( "ajax/test.html", function( data ) {
-				$( ".result").html( data );
-			)};
-			//http://librojquery.com/
-			//http://api.jquery.com/jquery.pos/
+			$.post( "<?php echo base_url()
+			?>admin/provincia/eliminar/"+$(this).val(),
+				function( data ) {
+			//$( ".result" ).html( data );
+			//alert(data);
+			//si envió desde provincia un 1 se elimina el registro
+					if(data==1){
+						$(location).attr('href',
+						'<?php echo base_url()?>admin/provincia/index');
+					}
+				}
+				);
+				//http://librojquery.com/
+				//http://api.jquery.com/jquery.pos/
 		}
 	}
 	$(".eliminar").click(eliminar);

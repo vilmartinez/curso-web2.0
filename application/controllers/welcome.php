@@ -5,7 +5,6 @@ class Welcome extends CI_Controller {
 		#echo "Hola mundo!";
 		$this->load->view('welcome_message');
 	}
-
 	public function provincias() {
 		$this->load->model('provincia_model');
 		$data = array();

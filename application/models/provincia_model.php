@@ -29,8 +29,9 @@ class provincia_model extends CI_Model {
 		$this->db->where('id',$id);
 		$this->db->update($this->tabla, $data);
 	}
-	public function borrar($id) {
+	public function eliminar($id) {
 		$this->db->where('id',$id);
+		//va a provincia.php
 		$this->db->delete($this->tabla);
 	}
 }
