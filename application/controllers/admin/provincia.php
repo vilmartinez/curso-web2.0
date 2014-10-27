@@ -6,9 +6,13 @@ class Provincia extends MY_Controller {
 	public $modelo = "provincia_model";
 	// luego llama al constructor
 	public function index() {
+		$filtro 			= $this->input->post('filtro');
+		//captura lo que se envio por post
 		$data               = array();
-		$data['provincias'] = $this->provincia_model->getList();
+		$data['provincias'] = $this->provincia_model->getList($filtro);
 		$data['titulo']     = "Listado de provincias";
+		$data['filtro']     = $filtro;
+		//se agrega la variable anterior que se capturo por el post
 		$this->load->view('admin/provincia/index', $data);
 	}
 

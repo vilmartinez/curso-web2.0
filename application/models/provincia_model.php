@@ -3,8 +3,9 @@ class provincia_model extends CI_Model {
 	private $tabla = 'provincia';
 
 	public function get($id, $idName = null) {
-		if ($idName)// Si obtenemos el nombre del campo
-		{ $this->db->where($idName, $id);
+		if ($idName){
+		// Si obtenemos el nombre del campo
+		 	$this->db->where($idName, $id);
 		} else {
 			// Campo ID por defecto
 			$this->db->where('id', $id);
@@ -16,8 +17,14 @@ class provincia_model extends CI_Model {
 		#return $q->result_array();
 	}
 
-	public function getList() {
+	public function getList($filtro='') {
+		//aca tengo que capturar el filtro vacio
 		$this->db->from($this->tabla);
+		if(!empty($filtro)){
+			$this->db->like('nombre',$filtro);
+			//busca lo que contiene por ej- 3 letras
+			//y no algo especifico
+		}
 		$q = $this->db->get();
 		return $q->result_array();
 	}
